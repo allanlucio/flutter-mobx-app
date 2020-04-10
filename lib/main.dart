@@ -46,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
   Counter counter = Counter();
   @override
   Widget build(BuildContext context) {
@@ -84,11 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Observer(builder: (_) {
+            Observer(builder: (_){
               return Text(
-                '${counter.count}',
-                style: Theme.of(context).textTheme.display1,
-              );
+              '${counter.count}',
+              style: Theme.of(context).textTheme.display1,
+            );
             })
           ],
         ),
