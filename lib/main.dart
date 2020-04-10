@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/counter.dart';
+import 'package:flutter_mobx_app/counter.dart';
 
 void main() => runApp(MyApp());
 
