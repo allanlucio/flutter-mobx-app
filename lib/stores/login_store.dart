@@ -42,7 +42,15 @@ abstract class _LoginStore with Store{
     await Future.delayed(Duration(seconds: 2));
     loggedIn= true;
     loading = false;
+    email = "";
+    password = "";
   }
+
+  @action 
+  void logout(){
+    loggedIn = false;
+  }
+
   @computed
   bool get isFormValid => email.length > 6 && password.length > 6;
 

@@ -4,6 +4,7 @@ import 'package:flutter_mobx_app/stores/login_store.dart';
 import 'package:flutter_mobx_app/widgets/custom_icon_button.dart';
 import 'package:flutter_mobx_app/widgets/custom_text_field.dart';
 import 'package:mobx/mobx.dart';
+import 'package:provider/provider.dart';
 
 import 'list_screen.dart';
 
@@ -13,13 +14,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginStore loginStore = LoginStore();
+  LoginStore loginStore;
   ReactionDisposer disposer;
 
   @override
   void didChangeDependencies() {
     
     super.didChangeDependencies();
+    loginStore = Provider.of<LoginStore>(context);
     disposer = autorun((_){
       if(loginStore.loggedIn){
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>ListScreen()));

@@ -146,6 +146,16 @@ mixin _$LoginStore on _LoginStore, Store {
   }
 
   @override
+  void logout() {
+    final _$actionInfo = _$_LoginStoreActionController.startAction();
+    try {
+      return super.logout();
+    } finally {
+      _$_LoginStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
         'email: ${email.toString()},password: ${password.toString()},showPassword: ${showPassword.toString()},loading: ${loading.toString()},loggedIn: ${loggedIn.toString()},isFormValid: ${isFormValid.toString()},loginPressed: ${loginPressed.toString()}';

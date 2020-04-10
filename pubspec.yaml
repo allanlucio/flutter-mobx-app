@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   mobx: ^1.1.1
   flutter_mobx: ^1.1.0
+  provider: ^4.0.4
   
 
 dev_dependencies:
@@ -32,6 +33,7 @@ dev_dependencies:
     sdk: flutter
   mobx_codegen: ^1.0.3
   build_runner: ^1.8.0
+
 
 
 # For information on the generic Dart part of this file, see the
