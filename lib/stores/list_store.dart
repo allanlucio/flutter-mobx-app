@@ -1,3 +1,4 @@
+import 'package:flutter_mobx_app/stores/todo_store.dart';
 import 'package:mobx/mobx.dart';
 
 part 'list_store.g.dart';
@@ -9,14 +10,15 @@ abstract class _ListStore with Store{
   String newTodoTitle = "";
 
   @observable
-  ObservableList<String> todoList = ObservableList<String>();
+  ObservableList<TodoStore> todoList = ObservableList<TodoStore>();
 
   @action
   void setNewTodoTitle(String value) => newTodoTitle=value;
 
   @action
   void addTodo(){
-    todoList.add(newTodoTitle);
+    todoList.insert(0, TodoStore(newTodoTitle));
+    newTodoTitle="";
     
   }
 

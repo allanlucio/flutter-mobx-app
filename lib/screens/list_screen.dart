@@ -4,18 +4,16 @@ import 'package:flutter_mobx_app/stores/list_store.dart';
 import 'package:flutter_mobx_app/widgets/custom_icon_button.dart';
 import 'package:flutter_mobx_app/widgets/custom_text_field.dart';
 
-
 import 'login_screen.dart';
 
 class ListScreen extends StatefulWidget {
-
   @override
   _ListScreenState createState() => _ListScreenState();
 }
 
 class _ListScreenState extends State<ListScreen> {
-
   ListStore listStore = ListStore();
+  TextEditingController todoTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +24,8 @@ class _ListScreenState extends State<ListScreen> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 2),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 2),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -35,16 +34,14 @@ class _ListScreenState extends State<ListScreen> {
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w900,
-                          fontSize: 32
-                      ),
+                          fontSize: 32),
                     ),
                     IconButton(
                       icon: Icon(Icons.exit_to_app),
                       color: Colors.white,
-                      onPressed: (){
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context)=>LoginScreen())
-                        );
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => LoginScreen()));
                       },
                     ),
                   ],
@@ -60,40 +57,57 @@ class _ListScreenState extends State<ListScreen> {
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       children: <Widget>[
-                        Observer(builder: (_){
-                          return CustomTextField(
-                          hint: 'Tarefa',
-                          onChanged: listStore.setNewTodoTitle,
-                          suffix: listStore.isToDoTitleValid?
-                            CustomIconButton(
-                            
-                            radius: 32,
-                            iconData: Icons.add,
-                            onTap: listStore.addTodo,
-                          ):null,
-                        );
-                        },),
-                        const SizedBox(height: 8,),
-                        Expanded(
-                          child: Observer(builder: (_){
-                            return ListView.separated(
-                            itemCount: listStore.todoList.length,
-                            itemBuilder: (_, index){
-                              return ListTile(
-                                title: Text(
-                                  listStore.todoList[index]
-                                ),
-                                onTap: (){
-
-                                },
-                              );
-                            },
-                            separatorBuilder: (_, __){
-                              return Divider();
-                            },
-                          );
-                          },)
+                        Observer(
+                          builder: (_) {
+                            return CustomTextField(
+                              controller: todoTextController,
+                              hint: 'Tarefa',
+                              onChanged: listStore.setNewTodoTitle,
+                              suffix: listStore.isToDoTitleValid
+                                  ? CustomIconButton(
+                                      radius: 32,
+                                      iconData: Icons.add,
+                                      onTap: (){
+                                          listStore.addTodo();
+                                          WidgetsBinding.instance.addPostFrameCallback((_) => todoTextController.clear());
+                                          
+                                          },
+                                    )
+                                  : null,
+                            );
+                          },
                         ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Expanded(child: Observer(
+                          builder: (_) {
+                            return ListView.separated(
+                              itemCount: listStore.todoList.length,
+                              itemBuilder: (_, index) {
+                                final todo = listStore.todoList[index];
+                                return Observer(
+                                  builder: (_) {
+                                    return ListTile(
+                                      title: Text(
+                                        todo.title,
+                                        style: TextStyle(
+                                          color: todo.done ? Colors.grey : Colors.black,
+                                            decoration: todo.done
+                                                ? TextDecoration.lineThrough
+                                                : null),
+                                      ),
+                                      onTap: todo.toggleDone,
+                                    );
+                                  },
+                                );
+                              },
+                              separatorBuilder: (_, __) {
+                                return Divider();
+                              },
+                            );
+                          },
+                        )),
                       ],
                     ),
                   ),

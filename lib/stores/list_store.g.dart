@@ -36,14 +36,14 @@ mixin _$ListStore on _ListStore, Store {
   final _$todoListAtom = Atom(name: '_ListStore.todoList');
 
   @override
-  ObservableList<String> get todoList {
+  ObservableList<TodoStore> get todoList {
     _$todoListAtom.context.enforceReadPolicy(_$todoListAtom);
     _$todoListAtom.reportObserved();
     return super.todoList;
   }
 
   @override
-  set todoList(ObservableList<String> value) {
+  set todoList(ObservableList<TodoStore> value) {
     _$todoListAtom.context.conditionallyRunInAction(() {
       super.todoList = value;
       _$todoListAtom.reportChanged();
