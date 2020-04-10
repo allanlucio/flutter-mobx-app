@@ -49,6 +49,23 @@ mixin _$LoginStore on _LoginStore, Store {
     }, _$passwordAtom, name: '${_$passwordAtom.name}_set');
   }
 
+  final _$showPasswordAtom = Atom(name: '_LoginStore.showPassword');
+
+  @override
+  bool get showPassword {
+    _$showPasswordAtom.context.enforceReadPolicy(_$showPasswordAtom);
+    _$showPasswordAtom.reportObserved();
+    return super.showPassword;
+  }
+
+  @override
+  set showPassword(bool value) {
+    _$showPasswordAtom.context.conditionallyRunInAction(() {
+      super.showPassword = value;
+      _$showPasswordAtom.reportChanged();
+    }, _$showPasswordAtom, name: '${_$showPasswordAtom.name}_set');
+  }
+
   final _$_LoginStoreActionController = ActionController(name: '_LoginStore');
 
   @override
@@ -56,6 +73,16 @@ mixin _$LoginStore on _LoginStore, Store {
     final _$actionInfo = _$_LoginStoreActionController.startAction();
     try {
       return super.setEmail(value);
+    } finally {
+      _$_LoginStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void toggleShowPassword() {
+    final _$actionInfo = _$_LoginStoreActionController.startAction();
+    try {
+      return super.toggleShowPassword();
     } finally {
       _$_LoginStoreActionController.endAction(_$actionInfo);
     }
@@ -74,7 +101,7 @@ mixin _$LoginStore on _LoginStore, Store {
   @override
   String toString() {
     final string =
-        'email: ${email.toString()},password: ${password.toString()},isFormValid: ${isFormValid.toString()}';
+        'email: ${email.toString()},password: ${password.toString()},showPassword: ${showPassword.toString()},isFormValid: ${isFormValid.toString()}';
     return '{$string}';
   }
 }

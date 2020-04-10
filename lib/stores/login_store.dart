@@ -12,6 +12,9 @@ abstract class _LoginStore with Store{
   @observable
   String password = "";
 
+  @observable
+  bool showPassword = false;
+
   _LoginStore(){
     autorun((_){
       print(isFormValid);
@@ -20,6 +23,9 @@ abstract class _LoginStore with Store{
 
   @action
   void setEmail(String value) => email = value;
+  
+  @action
+  void toggleShowPassword() => showPassword = !showPassword;
   
   @action
   void setPassword(String value) => password = value;
